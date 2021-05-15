@@ -148,6 +148,7 @@ async function updateUser() {
             body: JSON.stringify(user)
         });
         if (response.ok) {
+            $('#edit').modal('hide');
             viewAllUsers();
         } else {
             $(".error").remove();
