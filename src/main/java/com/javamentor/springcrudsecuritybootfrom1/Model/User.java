@@ -25,17 +25,17 @@ import static com.javamentor.springcrudsecuritybootfrom1.Model.ERole.ROLE_ADMIN;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "user_name")
     @NotEmpty(message = "Username should not be empty!")
-    @Size(min = 2, max = 30, message ="Minimum 2 and maximum 30 characters")
+    @Size(min = 2, max = 30)
     private String username;
 
     @Column(name = "password")
     @NotEmpty(message = "Password should not be empty!")
-    @Size(min = 5, max = 100, message ="Minimum 5 and maximum 15 characters")
+    @Size(min = 5, max = 100, message = "Minimum 5 and maximum 15 characters")
     private String password;
 
     @Column(name = "first_name")
@@ -49,11 +49,13 @@ public class User {
     private String lastName;
 
     @Column(name = "age")
-   // @NotEmpty(message = "Age name should not be empty!")
-    @Min(value = 0, message = "The age cannot be less than 0.")
+    //@NotEmpty(message = "Age name should not be empty!")
+    @Min(value = 1, message = "The age cannot be less than 0.")
     private int age;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(
+          //  cascade = CascadeType.MERGE,
+            fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

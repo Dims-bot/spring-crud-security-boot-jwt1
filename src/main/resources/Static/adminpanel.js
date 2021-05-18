@@ -17,6 +17,7 @@ function getUserForFillModal(id) {
                     $(".modal-body #lastNameEdit").val(user.lastName)
                     $(".modal-body #ageEdit").val(user.age)
                     $(".modal-body #usernameEdit").val(user.username)
+                    $('#rolesEdit').val(user.userRolesPrefixFree)
 
                     //    -------------fillDeleteModal-----------------------
                     $(".modal-body #idDelete").val(user.id)
@@ -24,6 +25,8 @@ function getUserForFillModal(id) {
                     $(".modal-body #lastNameDelete").val(user.lastName)
                     $(".modal-body #ageDelete").val(user.age)
                     $(".modal-body #usernameDelete").val(user.username)
+                    $('#rolesDelete').val(user.userRolesPrefixFree)
+
                 })
         });
 }
@@ -104,6 +107,9 @@ function allUser() {
 
 async function updateUser() {
     event.preventDefault()
+
+
+
     let userId = $("#idEdit").val();
     let firstName = $("#firstNameEdit").val();
     let lastName = $("#lastNameEdit").val();
@@ -120,23 +126,19 @@ async function updateUser() {
         password: password,
         roles: roles
     }
+
     $(".error").remove();
     if (firstName.length < 2 || firstName.length > 30) {
         $('#firstNameEdit').after('<span class="error">This field is required. Minimum 2 and maximum 30 characters!</span>');
-    }
-    if (lastName.length < 2 || lastName.length > 30) {
+    } else if (lastName.length < 2 || lastName.length > 30) {
         $('#lastNameEdit').after('<span class="error">This field is required. Minimum 2 and maximum 30 characters!</span>');
-    }
-    if (age < 1) {
-        $('#ageEdit').after('<span class="error">This field is required. The age cannot be less than 0!</span>');
-    }
-    if (username.length < 2 || username.length > 30) {
+    } else if (age < 1) {
+        $('#ageEdit').after('<span class="error">This field is required. The age cannot be less than 1!</span>');
+    } else if (username.length < 2 || username.length > 30) {
         $('#usernameEdit').after('<span class="error">This field is required. Minimum 2 and maximum 30 characters!</span>');
-    }
-    if (password.length < 5 || password.length > 30) {
+    } else if (password.length < 5 || password.length > 100) {
         $('#passwordEdit').after('<span class="error">This field is required. Minimum 5 and maximum 30 characters!</span>');
-    }
-    if (roles.length < 1) {
+    } else if (roles.length < 1) {
         $('#rolesEdit').after('<span class="error">This field is required</span>');
     } else {
         let response = await fetch("http://localhost:8080/users/admin/" + userId, {
@@ -199,20 +201,15 @@ $(document).ready(function () {
             $(".error").remove();
             if (firstName.length < 2 || firstName.length > 30) {
                 $('#firstNameNewUser').after('<span class="error">This field is required. Minimum 2 and maximum 30 characters!</span>');
-            }
-            if (lastName.length < 2 || lastName.length > 30) {
+            } else if (lastName.length < 2 || lastName.length > 30) {
                 $('#lastNameNewUser').after('<span class="error">This field is required. Minimum 2 and maximum 30 characters!</span>');
-            }
-            if (age < 1) {
-                $('#ageNewUser').after('<span class="error">This field is required. The age cannot be less than 0!</span>');
-            }
-            if (username.length < 2 || username.length > 30) {
+            } else if (age < 1) {
+                $('#ageNewUser').after('<span class="error">This field is required. The age cannot be less than 1!</span>');
+            } else if (username.length < 2 || username.length > 30) {
                 $('#usernameNewUser').after('<span class="error">This field is required. Minimum 2 and maximum 30 characters!</span>');
-            }
-            if (password.length < 5 || password.length > 30) {
+            } else if (password.length < 5 || password.length > 100) {
                 $('#passwordNewUser').after('<span class="error">This field is required. Minimum 5 and maximum 30 characters!</span>');
-            }
-            if (roles.length < 1) {
+            } else if (roles.length < 1) {
                 $('#rolesNewUser').after('<span class="error">This field is required</span>');
             } else {
                 let response = await fetch("http://localhost:8080/users/admin/newUser", {
@@ -231,6 +228,7 @@ $(document).ready(function () {
                     $(".error").remove();
                     $('#usernameNewUser').after('<span class="error">Username is exist</span>');
                 }
+
 
             }
         }
