@@ -6,11 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Set;
 
 import static com.javamentor.springcrudsecuritybootfrom1.Model.ERole.ROLE_ADMIN;
@@ -22,7 +25,7 @@ import static com.javamentor.springcrudsecuritybootfrom1.Model.ERole.ROLE_ADMIN;
 @Entity
 @Builder
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "user_name")})
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -94,5 +97,31 @@ public class User {
         }
 
         return rolePrefixFree.toString();
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

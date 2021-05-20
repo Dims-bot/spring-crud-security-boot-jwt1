@@ -17,7 +17,7 @@ function getUserForFillModal(id) {
                     $(".modal-body #lastNameEdit").val(user.lastName)
                     $(".modal-body #ageEdit").val(user.age)
                     $(".modal-body #usernameEdit").val(user.username)
-                    $('#rolesEdit').val(user.userRolesPrefixFree)
+                    $('#rolesEdit').val(user.roles.map(r => r.role.replace('ROLE_', '')).join(', '))
 
                     //    -------------fillDeleteModal-----------------------
                     $(".modal-body #idDelete").val(user.id)
@@ -25,7 +25,7 @@ function getUserForFillModal(id) {
                     $(".modal-body #lastNameDelete").val(user.lastName)
                     $(".modal-body #ageDelete").val(user.age)
                     $(".modal-body #usernameDelete").val(user.username)
-                    $('#rolesDelete').val(user.userRolesPrefixFree)
+                    $('#rolesDelete').val(user.roles.map(r => r.role.replace('ROLE_', '')).join(', '))
 
                 })
         });
@@ -34,6 +34,17 @@ function getUserForFillModal(id) {
 //-------------------Admin panel with all users (tab)---------------
 
 async function viewAllUsers() {
+
+    fetch("http://localhost:8080/users/admin/principal")
+        .then((res) => res.json())
+        .then((user) => {
+            $(".nav-username").text(user.username);
+            $(".nav-user-roles").text('with roles: ' + user.roles.map(r => r.role.replace('ROLE_', '')).join(', '));
+
+
+        })
+
+
     $('#data').empty();
 
     fetch("http://localhost:8080/users/admin/allusers")
@@ -48,7 +59,7 @@ async function viewAllUsers() {
                         <td id='lastName${user.id}'>${user.lastName}</td>
                         <td id='age${user.id}'>${user.age}</td>
                         <td id='username${user.id}'>${user.username}</td>
-                        <td id='roles${user.id}'>${user.userRolesPrefixFree}</td>
+                        <td id='roles${user.id}'>${user.roles.map(r => r.role.replace('ROLE_', '')).join(', ')}</td>
                         <td>
                             <button onclick= "getUserForFillModal('${user.id}')" class="btn btn-primary"
                                 type="button"
@@ -89,7 +100,7 @@ function userInfo() {
             <td>${user.lastName}</td>
             <td>${user.age}</td>
             <td>${user.username}</td>
-            <td>${user.userRolesPrefixFree}</td>
+            <td>${user.roles.map(r => r.role.replace('ROLE_', '')).join(', ')}</td>
             `;
             tab += "<tr>";
             $('#userInfoBodyTab').append(tab);
@@ -104,10 +115,8 @@ function allUser() {
 //-------------Update User--------------------------------------------
 
 
-
 async function updateUser() {
     event.preventDefault()
-
 
 
     let userId = $("#idEdit").val();
@@ -136,12 +145,14 @@ async function updateUser() {
         $('#ageEdit').after('<span class="error">This field is required. The age cannot be less than 1!</span>');
     } else if (username.length < 2 || username.length > 30) {
         $('#usernameEdit').after('<span class="error">This field is required. Minimum 2 and maximum 30 characters!</span>');
-    } else if (password.length < 5 || password.length > 100) {
-        $('#passwordEdit').after('<span class="error">This field is required. Minimum 5 and maximum 30 characters!</span>');
-    } else if (roles.length < 1) {
+    }
+        // else if (password.length < 5 || password.length > 100) {
+        //     $('#passwordEdit').after('<span class="error">This field is required. Minimum 5 and maximum 30 characters!</span>');
+    // }
+    else if (roles.length < 1) {
         $('#rolesEdit').after('<span class="error">This field is required</span>');
     } else {
-        let response = await fetch("http://localhost:8080/users/admin/" + userId, {
+        let response = await fetch("http://localhost:8080/users/admin/" + userId +"/" + username, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',

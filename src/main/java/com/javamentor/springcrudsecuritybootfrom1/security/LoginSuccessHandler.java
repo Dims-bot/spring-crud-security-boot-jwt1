@@ -1,4 +1,4 @@
-package com.javamentor.springcrudsecuritybootfrom1.configuration;
+package com.javamentor.springcrudsecuritybootfrom1.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;

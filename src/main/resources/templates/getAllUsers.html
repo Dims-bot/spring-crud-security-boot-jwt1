@@ -28,9 +28,11 @@
 <div class="nav-bar navbar-dark bg-dark shadow-sm">
     <div id="header" class="container1" style="padding: 10px">
         <div style="color: white; font-size: 20px; font-weight: bold">
-            <span th:text="${principalUsername}">Username current login user
+            <span class="nav-username" >Username current login user
             </span>
-            <span th:text="${'with roles: ' + userRolesPrefixFree}"
+<!--            th:text="${principalUsername}"-->
+<!--            th:text="${'with roles: ' + userRolesPrefixFree}"-->
+            <span class="nav-user-roles"
                   style="color: white; font-size: 15px; font-weight: normal">roles of current login user
             </span>
 
@@ -190,6 +192,7 @@
                                                         type="text">
                                                     <option id="optionAdmin" value="ADMIN"  style="font-size: small">ADMIN</option>
                                                     <option id="optionUser" value="USER"  style="font-size: small">USER</option>
+                                                    <option id="optionUserAdmin" value="ADMIN, USER"  style="font-size: small">ADMIN, USER</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -278,6 +281,8 @@
                                                         type="text" readonly="">
                                                     <option value="ADMIN" style="font-size: small">ADMIN</option>
                                                     <option value="USER" style="font-size: small">USER</option>
+                                                    <option value="ADMIN, USER" style="font-size: small">ADMIN, USER</option>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -349,6 +354,7 @@
                                         style="height: 50px">
                                     <option value="ADMIN" style="font-size: small">ADMIN</option>
                                     <option value="USER" style="font-size: small">USER</option>
+                                    <option value="ADMIN, USER" style="font-size: small">ADMIN, USER </option>
                                 </select>
                             </div>
 

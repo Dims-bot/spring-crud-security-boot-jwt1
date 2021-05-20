@@ -1,4 +1,4 @@
-package com.javamentor.springcrudsecuritybootfrom1.service;
+package com.javamentor.springcrudsecuritybootfrom1.security;
 
 import com.javamentor.springcrudsecuritybootfrom1.Model.User;
 import com.javamentor.springcrudsecuritybootfrom1.repository.UserRepository;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public UserDetailsServiceImpl(UserRepository userRepository) {
@@ -23,6 +23,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-        return UserDetailsImpl.build(user);
+        return (User)(user);
     }
 }

@@ -1,6 +1,6 @@
-package com.javamentor.springcrudsecuritybootfrom1.configuration;
+package com.javamentor.springcrudsecuritybootfrom1.security;
 
-import com.javamentor.springcrudsecuritybootfrom1.service.UserDetailsServiceImpl;
+import com.javamentor.springcrudsecuritybootfrom1.security.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,9 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -24,7 +22,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public WebSecurityConfiguration(UserDetailsServiceImpl userDetailsService,
-            LoginSuccessHandler loginSuccessHandler) {
+                                    LoginSuccessHandler loginSuccessHandler) {
         this.userDetailsService = userDetailsService;
        // this.loginSuccessHandler = loginSuccessHandler;
     }
@@ -50,7 +48,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/login").anonymous()
                 .antMatchers("/users/admin/**").hasRole("ADMIN")
-                .antMatchers("/users/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/users/user/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and().
 

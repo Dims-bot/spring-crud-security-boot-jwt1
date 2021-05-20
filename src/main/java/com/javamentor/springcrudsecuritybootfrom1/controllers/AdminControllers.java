@@ -25,34 +25,24 @@ public class AdminControllers {
 
         return "login";
     }
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @GetMapping("/users/admin")
-    public String getAllUsers(ModelMap modelMap, Principal principal) {
-        User user = userService.getUserByUsername(principal.getName());
-
-        //modelMap.addAttribute("users", userService.getAllUsers());
-        modelMap.addAttribute("principalUsername", principal.getName());
-        modelMap.addAttribute("user", userService.getUserByUsername(principal.getName()));
-        modelMap.addAttribute("userRolesPrefixFree", user.getUserRolesPrefixFree());
-
-
-        return "getAllUsers";
-    }
-
-    @GetMapping("/users/user")
-    public String getUserByLogin(ModelMap modelMap, Principal principal) {
-        User user = userService.getUserByUsername(principal.getName());
-
-        modelMap.addAttribute("user", userService.getUserByUsername(principal.getName()));
-        modelMap.addAttribute("userRolesPrefixFree", user.getUserRolesPrefixFree());
-        modelMap.addAttribute("principalUsername", principal.getName());
-
-        return "user";
-    }
-
-
 }
+//
+//    @GetMapping("/login")
+//    public String login() {
+//        return "login";
+//    }
+
+//    @GetMapping("/users/admin")
+//    public String getAllUsers() {
+//
+//        return "getAllUsers";
+//    }
+//
+//    @GetMapping("/users/user")
+//    public String getUserByLogin() {
+//
+//        return "user";
+//    }
+
+
+//}
