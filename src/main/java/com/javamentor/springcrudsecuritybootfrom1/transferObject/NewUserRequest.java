@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 @Data
 public class NewUserRequest {

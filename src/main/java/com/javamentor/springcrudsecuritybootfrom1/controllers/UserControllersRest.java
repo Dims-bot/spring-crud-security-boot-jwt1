@@ -4,6 +4,7 @@ import com.javamentor.springcrudsecuritybootfrom1.Model.User;
 import com.javamentor.springcrudsecuritybootfrom1.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,11 +23,12 @@ public class UserControllersRest {
     }
 
     @GetMapping("/principal")
-    public User principalUser(Principal principal) {
-        User user = userService.getUserByUsername(principal.getName());
+    public ResponseEntity<User> principalUser(Principal principal) {
 
-        return user;
+        return ResponseEntity.ok(userService.getUserByUsername(principal.getName()));
     }
+
+
 
 
 }

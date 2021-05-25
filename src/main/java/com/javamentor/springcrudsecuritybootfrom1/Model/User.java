@@ -16,8 +16,6 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Set;
 
-import static com.javamentor.springcrudsecuritybootfrom1.Model.ERole.ROLE_ADMIN;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -86,18 +84,18 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    public String getUserRolesPrefixFree() {
-        StringBuilder rolePrefixFree = new StringBuilder();
-        for (Role role : this.roles) {
-            if ((role.getRole()).equals(ROLE_ADMIN)) {
-                rolePrefixFree.append("ADMIN");
-            } else {
-                rolePrefixFree.append("USER");
-            }
-        }
-
-        return rolePrefixFree.toString();
-    }
+//    public String getUserRolesPrefixFree() {
+//        StringBuilder rolePrefixFree = new StringBuilder();
+//        for (Role role : this.roles) {
+//            if ((role.getRole()).equals(ROLE_ADMIN)) {
+//                rolePrefixFree.append("ADMIN");
+//            } else {
+//                rolePrefixFree.append("USER");
+//            }
+//        }
+//
+//        return rolePrefixFree.toString();
+//    }
 
 
     @Override

@@ -146,9 +146,9 @@ async function updateUser() {
     } else if (username.length < 2 || username.length > 30) {
         $('#usernameEdit').after('<span class="error">This field is required. Minimum 2 and maximum 30 characters!</span>');
     }
-        // else if (password.length < 5 || password.length > 100) {
-        //     $('#passwordEdit').after('<span class="error">This field is required. Minimum 5 and maximum 30 characters!</span>');
-    // }
+        else if ((password.length < 5 &&  password.length > 0) || password.length > 100) {
+            $('#passwordEdit').after('<span class="error">This field is required. Minimum 5 and maximum 30 characters!</span>');
+    }
     else if (roles.length < 1) {
         $('#rolesEdit').after('<span class="error">This field is required</span>');
     } else {
